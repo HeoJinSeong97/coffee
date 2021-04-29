@@ -56,12 +56,12 @@ public class Sales{
 //			오늘 총 매출을 검색한다.
 			String sql = "select ordernum, menu, quantity, sum(price) as psum from sales order by ordernum, menu";
 			rs =  stmt.executeQuery(sql);
-
+			System.out.println("주문번호\t메뉴\t\t수량\t합계");
 			while (rs.next()) {
-				System.out.println(rs.getInt("ordernum")+" "+rs.getString("menu")+" "+
-			rs.getInt("quantity")+" "+rs.getInt("psum"));
-			
+				System.out.println(rs.getInt("ordernum")+"\t"+rs.getString("menu")+"\t\t"+
+			rs.getInt("quantity")+"\t"+rs.getInt("psum"));
 			}
+			totalPrice();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
