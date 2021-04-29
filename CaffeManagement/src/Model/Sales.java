@@ -33,7 +33,7 @@ public class Sales{
 			while (rs.next()) {
 				totalprice += rs.getInt("psum");
 			}
-			System.out.println("√— ∏≈√‚: "+totalprice);
+			System.out.println("√— ∏≈√‚: "+totalprice+"ø¯");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -15,6 +15,7 @@ public class DBTest{
 //		new Sales(1).Delete();//확인완료
 //		new Sales().Select();//확인완료
 //		new Sales().totalPrice();//확인완료
+		
 //		DB연결해제
 		DBUtill.close(conn);
 	}
