@@ -14,7 +14,24 @@ public class Controll {
    Statement statement = null;
    ResultSet resultSet = null;
 
-   Controll() {Connection conn = DBUtill.getMySqlConnection();}
+   Controll() {connection = DBUtill.getMySqlConnection();
+//   String DName = "com.mysql.jdbc.Driver";
+//
+//   try {
+//      Class.forName(DName);
+//
+//      String url = "jdbc:mysql://192.168.55.5:3306/coffeemanagement";
+//      String user = "coffee";
+//      String password = "0000";
+//
+//      connection = DriverManager.getConnection(url, user, password);
+//      statement = connection.createStatement();
+//      System.out.println("DB연동 성공");          //확인용 실제 실행시 주석처리 바람
+//   } catch (Exception e) {
+//      e.printStackTrace();
+//   }
+
+   }
 
    public void showMenuTable() {      //메뉴 테이블 전체 Show
       if (tableIsEmpty("menu")) {
