@@ -79,15 +79,16 @@ public class Controll {
          e.printStackTrace();
       }
    }
-   public void insertSales(int ordernum, int price, int quantity, String orderdate) {      //customer이 메뉴 주문 할 때 사용하는 함수
-      String sql = "insert into sales(ordernum,price,quantity,orderdate) values("+ordernum+", "+price+", "+quantity+", '"+orderdate+"')";
-      try {
-         statement.executeUpdate(sql);
-         System.out.println("매출관리 테이블 추가 성공");      // 매출관리테이블 추가 확인용 실제 실행시 주석 및 삭제 바람
-      } catch (SQLException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      }
+   public void insertSales(int ordernum, int price, int quantity, String menu) {      //customer이 메뉴 주문 할 때 사용하는 함수
+//      String sql = "insert into sales(ordernum,price,quantity,orderdate) values("+ordernum+", "+price+", "+quantity+", '"+orderdate+"')";
+//      try {
+//         statement.executeUpdate(sql);
+//         System.out.println("매출관리 테이블 추가 성공");      // 매출관리테이블 추가 확인용 실제 실행시 주석 및 삭제 바람
+//      } catch (SQLException e) {
+//         // TODO Auto-generated catch block
+//         e.printStackTrace();
+//      }
+	   new Sales(ordernum, price, quantity, menu).Insert();
    }
    public void insertCustomer(String menu, int price, int quantity) {      //admin이 메뉴 추가할때 사용하는함수
       String sql = "insert into Customer values('"+menu+"', "+price+", "+quantity+")";

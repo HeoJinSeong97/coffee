@@ -13,7 +13,7 @@ public class DBTest{
 //		쿼리작업란
 //		new Sales(1, 12000, 2, "돌체 라떼").Insert();//확인완료
 //		new Sales(1).Delete();//확인완료
-//		new Sales().Select();//확인완료
+		new Sales().Select();//확인완료
 //		new Sales().totalPrice();//확인완료
 		
 //		DB연결해제

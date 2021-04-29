@@ -11,6 +11,7 @@ public class Sales{
 	private int price;
 	private int quantity;
 	private String menu;
+//  주문시간은 sql insert시에 자동으로 삽입한 시간을 입력되도록 했습니다.
 	public Sales() {}
 	public Sales(int ordernum) {this.ordernum = ordernum;}
 	public Sales(int ordernum, int price, int quantity, String menu) {
@@ -18,16 +19,16 @@ public class Sales{
 		this.price = price;
 		this.quantity = quantity;
 		this.menu = menu;
+
 	}
-	
 	public void totalPrice() {
 		Connection conn = DBUtill.getMySqlConnection();
 		ResultSet rs = null;
-		Statement stmt;
+		Statement stmt = null;
 		try {
 			stmt = conn.createStatement();
 //			오늘 총 매출을 검색한다.
-			String sql = "select ordernum, menu, quantity, sum(price) as psum from sales order by ordernum, menu";
+			String sql = "select ordernum, menu, sum(quantity) as quantity, sum(price) as psum from sales group by ordernum, menu";
 			rs =  stmt.executeQuery(sql);
 			int totalprice = 0;
 			while (rs.next()) {
@@ -54,7 +55,7 @@ public class Sales{
 		try {
 			stmt = conn.createStatement();
 //			오늘 총 매출을 검색한다.
-			String sql = "select ordernum, menu, quantity, sum(price) as psum from sales order by ordernum, menu";
+			String sql = "select ordernum, menu, quantity, sum(price) as psum from sales group by ordernum, menu";
 			rs =  stmt.executeQuery(sql);
 			System.out.println("주문번호\t메뉴\t\t수량\t합계");
 			while (rs.next()) {
@@ -89,8 +90,13 @@ public class Sales{
 			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			DBUtill.close(conn);
 		}
 	}
