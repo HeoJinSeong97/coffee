@@ -17,7 +17,7 @@ public class DBUtill {
 			String user = "coffee";
 			String password = "0000";
 			conn = DriverManager.getConnection(url, user, password);
-			System.out.println("DB연결성공!");
+//			System.out.println("DB연결성공!");
 			
 		}catch(ClassNotFoundException e) {
 			System.out.println("드라이버 클래스가 없거나 로드할 수 없습니다.<br/>");
