@@ -1,6 +1,7 @@
 package Model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,7 @@ public class Sales{
 	private int price;
 	private int quantity;
 	private String menu;
+	private Date ortime;
 //  주문시간은 sql insert시에 자동으로 삽입한 시간을 입력되도록 했습니다.
 	public Sales() {}
 	public Sales(int ordernum) {this.ordernum = ordernum;}
@@ -21,6 +23,7 @@ public class Sales{
 		this.menu = menu;
 
 	}
+//	public void setOrtime(ResultSet rs) {this.ortime = rs.getDate("ordate");}
 	public void totalPrice() {
 		Connection conn = DBUtill.getMySqlConnection();
 		ResultSet rs = null;
@@ -52,15 +55,16 @@ public class Sales{
 		Connection conn = DBUtill.getMySqlConnection();
 		ResultSet rs = null;
 		Statement stmt;
+		
 		try {
 			stmt = conn.createStatement();
 //			오늘 총 매출을 검색한다.
 			String sql = "select ordernum, menu, quantity, sum(price) as psum from sales group by ordernum, menu";
 			rs =  stmt.executeQuery(sql);
-			System.out.println("주문번호\t메뉴\t\t수량\t합계");
+			System.out.println("주문번호\t메뉴\t\t수량\t합계\t날짜");
 			while (rs.next()) {
 				System.out.println(rs.getInt("ordernum")+"\t"+rs.getString("menu")+"\t\t"+
-			rs.getInt("quantity")+"\t"+rs.getInt("psum"));
+			rs.getInt("quantity")+"\t"+rs.getInt("psum")+"\t"+rs.getTimestamp("ordate"));
 			}
 			totalPrice();
 		} catch (SQLException e) {
