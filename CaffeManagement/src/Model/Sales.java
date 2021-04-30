@@ -59,7 +59,7 @@ public class Sales{
 		try {
 			stmt = conn.createStatement();
 //			오늘 총 매출을 검색한다.
-			String sql = "select ordernum, menu, quantity, sum(price) as psum from sales group by ordernum, menu";
+			String sql = "select ordernum, menu, quantity, sum(price) as psum, ordate from sales group by ordernum, menu";
 			rs =  stmt.executeQuery(sql);
 			System.out.println("주문번호\t메뉴\t\t수량\t합계\t날짜");
 			while (rs.next()) {
