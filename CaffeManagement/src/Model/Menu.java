@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Menu {
+public class Menu extends MyExecuteQuary{
 	   private String menu;
 	   private int price;
 	   private String info;
 	   private int remain;
 
-	   Menu() {
+	   public Menu() {
 	   } // 기본 생성자
 
 	   public Menu(String menu, int price, String info, int remain) { // 기본생성자
@@ -22,40 +22,16 @@ public class Menu {
 	      this.remain = remain;
 	   }
 
-	   public void select() { // menuShowAll 사용방법 new menu().select();
+	   public ResultSet select() { // menuShowAll 사용방법 new menu().select();
 //	      해당 메서드는  모든 메뉴에대해 값을 전달해줍니다.
-	      if (!validationMenu()) {
-	         System.out.println("입력한 값이 적합하지 않습니다.");
-	      } else {
-	         Connection conn = DBUtill.getMySqlConnection();
-	         ResultSet rs = null;
-	         Statement stmt;
-
-	         try {
-	            stmt = conn.createStatement();
-	            String sql = "select * from menu";
-	            rs = stmt.executeQuery(sql);
-	            while (rs.next()) {
-	            	System.out.println(rs.getString("menu"));
-	            	System.out.println("설명");
-	            	System.out.println(rs.getString("info"));
-	            	System.out.println("가격:"+rs.getInt("price")+ "\t 재고" + rs.getInt("remain"));
-	            	System.out.println();
-	            }
-	         } catch (SQLException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	         } finally {
-	            try {
-	               rs.close();
-	               DBUtill.close(conn);
-	            } catch (SQLException e) {
-	               e.printStackTrace();
-	            }
-	         }
-	      }
+	       return super.menuSelect();
 	   }
-
+//		메뉴 반환 메서드
+	   public String getMenuInfo(String menu2) {
+		   String s = super.menuInfo(menu2);
+		   return s;
+		}
+	   
 	   public void insert() { // 메뉴 추가 사용방법 new Menu(menu, price, info, remain).Insert();
 	      Connection conn = DBUtill.getMySqlConnection();
 	      PreparedStatement pstmt = null;
@@ -79,7 +55,8 @@ public class Menu {
 	         DBUtill.close(conn);
 	      }
 	   }
-
+	   
+	   
 	   public void remainMinus(String menu, int num) { // 재고 삭제 사용 방법 new Menu().remainMinus(메뉴 이름, 삭제할 재고 량);
 	      Connection conn = DBUtill.getMySqlConnection();
 	      Statement stmt;
@@ -148,4 +125,13 @@ public class Menu {
 	      }
 	      return true;
 	   }
+
+	public boolean quantityCk(String menu, int quantity) {
+		String sql = "select remain from menu where menu = '"+menu+"'";
+		boolean ch = super.getQuantityCheck(sql, quantity);
+		return ch;
+	}
+
+
+	
 	}

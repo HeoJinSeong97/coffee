@@ -1,20 +1,24 @@
 package Controll;
 
+ 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import Model.DBUtill;
-import Model.Sales;
+import Model.*;
 
 public class Controll {
    Connection connection = null;
    Statement statement = null;
    ResultSet resultSet = null;
-
-   Controll() {connection = DBUtill.getMySqlConnection();
+   Menu m = null;
+   Sales s = null;
+   public Controll() {
+	 connection = DBUtill.getMySqlConnection();
+	 m = new Menu();
+	 s = new Sales();
 //   String DName = "com.mysql.jdbc.Driver";
 //
 //   try {
@@ -32,43 +36,37 @@ public class Controll {
 //   }
 
    }
-
+// 0501수정
    public void showMenuTable() {      //메뉴 테이블 전체 Show
       if (tableIsEmpty("menu")) {
-         String sql="select * from menu";
-         try {
-            resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-               System.out.println("메뉴 : " + resultSet.getString(1) + " 가격 : " + resultSet.getInt(2) + " info : "
-                     + resultSet.getString(3) + " 재고 : " + resultSet.getInt(4));
-            }
-         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
+    	  System.out.println("없는 메뉴입니다.");
       }else {
-         System.out.println("테이블에 값이 없습니다.");
+    	  ResultSet rs = m.menuSelect();
+    	  System.out.println("가격\t메뉴");
+			try {
+				while (rs.next()) {
+					System.out.println(rs.getInt("price")+"원\t"+rs.getString("menu"));											
+				}
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
       }
    }
-   public void showSalesTable() {   //매출 관리 테이블 전체 Show
-//      if (tableIsEmpty("sales")) {
-//         String sql="select * from sales";
-//         try {
-//            resultSet = statement.executeQuery(sql);
-//            while (resultSet.next()) {
-//               System.out.println("orderIdx : " + resultSet.getInt(1) + "Ordernum : " + resultSet.getInt(2) + " Price : "
-//                     + resultSet.getInt(3) + " quantity : " + resultSet.getInt(4)+" orderdate : "+resultSet.getDate(5));
-//            }
-//         } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//         }
-//      }else {
-//         System.out.println("테이블에 값이 없습니다.");
-//      }
-	   new Sales().select();
-	   
+// 0501수정
+   public String getMenuInfo(String menu) {
+//	   메뉴 설명을 반환하는 메서드		   
+	   return m.getMenuInfo(menu);		   
    }
+//   0501수정
+   public ResultSet showSalesTable() {   //매출 관리 테이블 전체 Show
+//	   return new Sales().select();
+	   return s.select();
+   }
+   
+   
    public void showCustomerTable() {      //고객 테이블 전체 Show
       if (tableIsEmpty("customer")) {
          String sql="select * from customer";
@@ -107,6 +105,21 @@ public class Controll {
 //      }
 	   new Sales(ordernum, price, quantity, menu).insert();
    }
+   
+   public boolean remainCheck(String menu, int quantity) {
+	   boolean ck = m.quantityCk(menu, quantity);
+	   return ck;
+   }
+   public int getMenuPrice(String menu) {
+		// 주문한 메뉴의 총 가격을 출력하기 위한 메서드
+		return m.getPrice(menu);
+	}
+   public boolean menuCheck(String menu) {
+		return false;
+	}
+//   0501수정
+   
+   
    public void insertCustomer(String menu, int price, int quantity) {      //admin이 메뉴 추가할때 사용하는함수
       String sql = "insert into Customer values('"+menu+"', "+price+", "+quantity+")";
       try {
@@ -117,6 +130,16 @@ public class Controll {
          e.printStackTrace();
       }
    }
+   public void insertCustomer(String menu, int quantity) {      //admin이 메뉴 추가할때 사용하는함수
+	      String sql = "insert into Customer values('"+menu+"', "+quantity+")";
+	      try {
+	         statement.executeUpdate(sql);
+	         System.out.println("주문 추가 성공");      // 고객 주문테이블 추가 확인용 실제 실행시 주석 및 삭제 바람
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+	   }
 
    public void deleteMenu(String menu) {               //admin 메뉴 삭제
       String sql="delete from menu where menu="+menu;
@@ -158,6 +181,7 @@ public class Controll {
       boolean isEmpty = true;
       String sql = "select * from " + tableName;
       try {
+    	 statement = connection.createStatement();
          resultSet = statement.executeQuery(sql);
          if (resultSet.next())
             isEmpty = false;
@@ -182,4 +206,6 @@ public class Controll {
          System.out.println("종료");
       }
    }
+
+
 }

@@ -63,34 +63,10 @@ public class Sales extends MyExecuteQuary{
 		}
 	}
 	
-	public void select() {
+	public ResultSet select() {
 //		해당 메서드는  모든 매출에대해 값을 전달해줍니다.
-		Connection conn = DBUtill.getMySqlConnection();
-		ResultSet rs = null;
-		Statement stmt;
-		
-		try {
-			stmt = conn.createStatement();
-//			오늘 총 매출을 검색한다.
-			String sql = "select ordernum, menu, quantity, sum(price) as psum, ordate from sales group by ordernum, menu";
-			rs =  stmt.executeQuery(sql);
-			System.out.println("주문번호\t메뉴\t\t수량\t합계\t날짜");
-			while (rs.next()) {
-				System.out.println(rs.getInt("ordernum")+"\t"+rs.getString("menu")+"\t\t"+
-			rs.getInt("quantity")+"\t"+rs.getInt("psum")+"\t"+rs.getTimestamp("ordate"));
-			}
-			totalPrice();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			try {
-				rs.close();
-				DBUtill.close(conn);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		String sql = "select ordernum, menu, quantity, sum(price) as psum, ordate from sales group by ordernum, menu";
+		return super.salesSelect(sql);
 	}
 	
 	public void insert() {
