@@ -96,7 +96,7 @@ public class Sales extends MyExecuteQuary{
 	public void insert() {
 //			사용방법 new Sales(주문번호, 가격, 주문수량, 메뉴이름).Insert();
 			String sql = "insert into sales(ordernum, price, quantity, menu) values("+ordernum+", "+price+", "+quantity+", '"+menu+"')";
-			super.customerInsert(sql);
+			super.myExecuteUpdate(sql);
 	}
 	public void delete(int num) {
 		//컨트롤단에서 데이터삭제를 요청하면 실행합니다.
@@ -104,6 +104,5 @@ public class Sales extends MyExecuteQuary{
 //			사용방법 new Sales().Delete(주문번호);
 			String sql = "delete from sales where ordernum = "+num;
 			super.myExecuteUpdate(sql);
-		
 	}
 }
