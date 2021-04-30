@@ -66,7 +66,7 @@ public class Controll {
 //      }else {
 //         System.out.println("테이블에 값이 없습니다.");
 //      }
-	   new Sales().Select();
+	   new Sales().select();
 	   
    }
    public void showCustomerTable() {      //고객 테이블 전체 Show
@@ -105,7 +105,7 @@ public class Controll {
 //         // TODO Auto-generated catch block
 //         e.printStackTrace();
 //      }
-	   new Sales(ordernum, price, quantity, menu).Insert();
+	   new Sales(ordernum, price, quantity, menu).insert();
    }
    public void insertCustomer(String menu, int price, int quantity) {      //admin이 메뉴 추가할때 사용하는함수
       String sql = "insert into Customer values('"+menu+"', "+price+", "+quantity+")";
