@@ -23,7 +23,18 @@ public class Sales{
 		this.menu = menu;
 
 	}
-//	public void setOrtime(ResultSet rs) {this.ortime = rs.getDate("ordate");}
+	
+	
+	public int getOrdernum() {return ordernum;}
+	public void setOrdernum(int ordernum) {this.ordernum = ordernum;}
+	public int getPrice() {return price;}
+	public void setPrice(int price) {this.price = price;}
+	public int getQuantity() {return quantity;}
+	public void setQuantity(int quantity) {this.quantity = quantity;}
+	public String getMenu() {return menu;}
+	public void setMenu(String menu) {this.menu = menu;}
+	public Date getOrtime() {return ortime;}
+	public void setOrtime(Date ortime) {this.ortime = ortime;}
 	public void totalPrice() {
 		Connection conn = DBUtill.getMySqlConnection();
 		ResultSet rs = null;
@@ -50,7 +61,7 @@ public class Sales{
 			}
 		}
 	}
-	public void Select() {
+	public void select() {
 //		해당 메서드는  모든 매출에대해 값을 전달해줍니다.
 		Connection conn = DBUtill.getMySqlConnection();
 		ResultSet rs = null;
@@ -79,7 +90,7 @@ public class Sales{
 			}
 		}
 	}
-	public void Insert() {
+	public void insert() {
 		// TODO Auto-generated method stub
 		Connection conn = DBUtill.getMySqlConnection();
 		PreparedStatement pstmt = null;
@@ -104,7 +115,7 @@ public class Sales{
 			DBUtill.close(conn);
 		}
 	}
-	public void Delete() {
+	public void delete() {
 		//컨트롤단에서 데이터삭제를 요청하면 실행합니다.
 		//생성자를 생성해 넘겨받는 주문번호에 해당하는 데이터를 전부 삭제_사용하지 않을것 같은 코드
 		Connection conn = DBUtill.getMySqlConnection();
